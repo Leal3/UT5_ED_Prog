@@ -23,4 +23,4 @@
 
       ![Diagrama de clases](uml/diagrama_clases.svg)
 
-![Diagrama de clases](uml/diagramaClases.svg)
+![Diagrama de clases](uml/diagrama_clases.png)
