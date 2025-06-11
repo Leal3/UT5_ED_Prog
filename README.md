@@ -1,92 +1,26 @@
-@startuml
+# UT5_ED_Prog
 
-abstract class Vehiculo {
-    - matricula: String
-    - marca: String
-    - modelo: String
-    - añoFabricacion: int
-    - kilometraje: int
-    - precio: double
-    - estado: Estado
-    - propietario: Persona
+**Checklist de tareas a realizar:**
 
-    + calcularRiesgo(): String
-    + imprimirDatos(): void
-}
+- [x] Crea un repositorio llamado UT5_ED_Prog.
 
-abstract class Coche {
-    - numPuertas: int
-    - tipoCombustible: Combustible
-    - capacidadMaletero: int
-    - traccion: Traccion
-}
+- [x] Añade un README.md con una checklist de tareas.
 
-class Sedan {
-    - espacioInterior: double
-    - nivelConfort: Confort
-}
+- [x] Crea una carpeta uml/ con un fichero .puml por cada clase detectada, con esta estructura inicial:
 
-class Suv {
-    - capacidadOffroad: boolean
-    - alturaLibreSuelo: double
-}
+      @startuml
+      class Vehiculo {
+      }
+      @enduml
 
-class Deportivo {
-    - aceleracion0a100: double
-    - potenciaCV: int
-    - tieneModoPista: boolean
-}
+- [x] Haz el primer commit con la estructura base súbelo al remoto (github).
 
-abstract class Moto {
-    - cilindrada: int
-    - peso: int
-    - alturaAsiento: double
-    - tipoTransmision: Transmision
-}
+- [x] Modela progresivamente atributos, métodos y relaciones entre clases.
 
-class Scooter {
-    - espacioBajoAsiento: int
-}
+- [x] Genera un diagrama UML en formato .svg con PlantUML.
 
-class MotoDeportiva {
-    - velocidadMaxima: double
-    - tieneQuickShifter: boolean
-}
+- [x] Inserta el diagrama en el README.md con:
 
-class Camion {
-    - capacidadCarga: double
-    - numEjes: int
-    - longitudRemolque: double
-    - potenciaMotor: int
-}
+      ![Diagrama de clases](uml/diagrama_clases.svg)
 
-class Persona {
-    - nombreApellidos: String
-    - dni: String
-    - fechaCaducidadCarnet: Date
-    - añoNacimiento: int
-}
-
-interface Valorable {
-    + calcularDepreciacion(): double
-}
-
-
-Vehiculo "1" *-- "0..1" Coche
-Vehiculo "1" *-- "0..1" Moto
-Vehiculo "1" *-- "0..1" Camion
-
-
-
-
-Vehiculo "1" --> "0..1" Persona : es propietario
-Vehiculo "1" ..|> "0..1" Valorable
-
-Coche "1" <|-- "0..1" Sedan
-Coche "1" <|-- "0..1" Suv
-Coche "1" <|-- "0..1" Deportivo
-
-Moto "1" <|-- "0..1" Scooter
-Moto "1" <|-- "0..1" MotoDeportiva
-
-@enduml# UT5_ED_Prog
+![Diagrama de clases](uml/diagramaClases.svg)
