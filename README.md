@@ -21,6 +21,6 @@
 
 - [x] Inserta el diagrama en el README.md con:
 
-      ![Diagrama de clases](uml/diagrama_clases.svg)
+      ![Diagrama de clases](UML/diagramaclases.svg)
 
-![Diagrama de clases](uml/diagrama_clases.png)
+![Diagrama de clases](UML/diagramaclases.svg)
