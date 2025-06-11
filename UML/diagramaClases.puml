@@ -1,126 +1,87 @@
 @startuml
+' Título del Diagrama
+title Diseño Estructural - Gestión de Vehículos
+
+' --- Configuración Visual (Opcional) ---
 skinparam classAttributeIconSize 0
-left to right direction
+skinparam linetype ortho
+hide empty members
 
-class Persona {
-    -nombre : String
-    -apellidos : String
-    -DNI : String { /* Formato: 8 dígitos + letra */ }
-    -fechaCaducidadCarnet : LocalDate
-    -anioNacimiento : int
+' --- Definición de Enumeraciones (Enums) ---
+enum NivelRiesgo {
+  BAJO
+  MEDIO
+  ALTO
 }
 
-abstract class Vehiculo {
-    -matricula : String { /* Formato: 4 dígitos + 3 letras */ }
-    -marca : String
-    -modelo : String
-    -anioFabricacion : int
-    -kilometraje : int
-    -precio : double
-    -estado : Estado
-    -propietario : Persona, null
-    +calcularRiesgo()
-    +imprimirDatosVehiculo()
-    +getAnios()
-}
-
-class Coche {
-    -numPuertas : NumPuertas
-    -tipoCombustible : TipoCombustible
-    -capacidadMaletero : int
-    -traccion : Traccion
-}
-
-class Moto {
-    -cilindrada : int
-    -peso : int
-    -alturaAsiento : double
-    -tipoTransmision : TipoTransmision
-}
-
-class Camion {
-    -capacidadCarga : double
-    -numEjes : int
-    -longitudRemolque : double
-    -potenciaMotor : int
-}
-
-class Sedan {
-    -espacioInterior : double
-    -nivelConfort : NivelConfort
-}
-
-class SUV {
-    -capacidadOffroad : boolean
-    -alturaLibreSuelo : double
-}
-
-class Deportivo {
-    -aceleracion0a100 : double
-    -potenciaCV : int
-    -tieneModoPista : boolean
-}
-
-class Scooter {
-    -espacioBajoAsiento : int
-}
-
-class Deportiva {
-    -velocidadMaxima : double
-    -tieneQuickShifter : boolean
-}
-
-class Validar {
-    +validarDNI(dni: String): boolean
-    +validarMatricula(matricula: String): boolean
-}
-
+' --- Definición de la Interfaz ---
 interface Valorable {
-    +calcularDepreciacion()
+  + calcularDepreciacion(): double
 }
 
-enum Estado {
-    DISPONIBLE
-    VENDIDO
+' --- Definición de la Clase Persona ---
+class Persona {
+  + nombre: String
+  + apellidos: String
+  - DNI: String
+  + anioNacimiento: int
+  + fechaCaducidadCarnet: LocalDate
+  --
+  + validarDNI(): boolean
 }
 
-enum NumPuertas {
-    3
-    5
+' --- Clase Base Abstracta y Relaciones ---
+abstract class Vehiculo {
+  + matricula: String
+  + marca: String
+  + modelo: String
+  # kilometraje: double
+  # precio: double
+  --
+  + {abstract} calcularRiesgoConductor(): NivelRiesgo
 }
 
-enum TipoCombustible {
-    GASOLINA
-    DIESEL
-    HIBRIDO
-    ELECTRICO
+' --- Relaciones Principales ---
+Vehiculo "1" o-- "0..1" Persona : "tiene un propietario >"
+Valorable <|.. Vehiculo
+
+' --- Subclases de Vehículo ---
+class Coche extends Vehiculo {
+  + numeroPuertas: int
+  + tipoCarroceria: String
 }
 
-enum Traccion {
-    DELANTERA
-    TRASERA
-    4X4
+class Moto extends Vehiculo {
+  + cilindrada: int
+  + tieneCarenado: boolean
 }
 
-enum NivelConfort {
-    BASICO
-    MEDIO
-    PREMIUM
+class Camion extends Vehiculo {
+  + capacidadCargaKg: double
+  + numeroEjes: int
 }
 
-enum TipoTransmision {
-    MANUAL
-    AUTOMATICA
+' --- Subtipos Específicos de Coche ---
+class Sedan extends Coche {
+  + capacidadMaleteroLitros: int
+}
+class SUV extends Coche {
+  + tieneTraccion4x4: boolean
+}
+class Deportivo extends Coche {
+  + potenciaCV: int
+  + velocidadMaxima: int
 }
 
-Coche --|> Vehiculo
-Moto --|> Vehiculo
-Camion --|> Vehiculo
-Sedan --|> Coche
-SUV --|> Coche
-Deportivo --|> Coche
-Scooter --|> Moto
-Deportiva --|> Moto
+' --- Subtipos Específicos de Moto ---
+class Scooter extends Moto {
+  + tieneHuecoBajoAsiento: boolean
+}
+class Deportiva extends Moto {
+  + posicionConduccion: String
+}
+
+@enduml
 Vehiculo "1"-->"0..*" Persona
 Vehiculo ..|> Valorable
 Vehiculo --> Validar
