@@ -1,1 +1,128 @@
+@startuml
+skinparam classAttributeIconSize 0
+left to right direction
 
+class Persona {
+    -nombre : String
+    -apellidos : String
+    -DNI : String { /* Formato: 8 dígitos + letra */ }
+    -fechaCaducidadCarnet : LocalDate
+    -anioNacimiento : int
+}
+
+abstract class Vehiculo {
+    -matricula : String { /* Formato: 4 dígitos + 3 letras */ }
+    -marca : String
+    -modelo : String
+    -anioFabricacion : int
+    -kilometraje : int
+    -precio : double
+    -estado : Estado
+    -propietario : Persona, null
+    +calcularRiesgo()
+    +imprimirDatosVehiculo()
+    +getAnios()
+}
+
+class Coche {
+    -numPuertas : NumPuertas
+    -tipoCombustible : TipoCombustible
+    -capacidadMaletero : int
+    -traccion : Traccion
+}
+
+class Moto {
+    -cilindrada : int
+    -peso : int
+    -alturaAsiento : double
+    -tipoTransmision : TipoTransmision
+}
+
+class Camion {
+    -capacidadCarga : double
+    -numEjes : int
+    -longitudRemolque : double
+    -potenciaMotor : int
+}
+
+class Sedan {
+    -espacioInterior : double
+    -nivelConfort : NivelConfort
+}
+
+class SUV {
+    -capacidadOffroad : boolean
+    -alturaLibreSuelo : double
+}
+
+class Deportivo {
+    -aceleracion0a100 : double
+    -potenciaCV : int
+    -tieneModoPista : boolean
+}
+
+class Scooter {
+    -espacioBajoAsiento : int
+}
+
+class Deportiva {
+    -velocidadMaxima : double
+    -tieneQuickShifter : boolean
+}
+
+class Validar {
+    +validarDNI(dni: String): boolean
+    +validarMatricula(matricula: String): boolean
+}
+
+interface Valorable {
+    +calcularDepreciacion()
+}
+
+enum Estado {
+    DISPONIBLE
+    VENDIDO
+}
+
+enum NumPuertas {
+    3
+    5
+}
+
+enum TipoCombustible {
+    GASOLINA
+    DIESEL
+    HIBRIDO
+    ELECTRICO
+}
+
+enum Traccion {
+    DELANTERA
+    TRASERA
+    4X4
+}
+
+enum NivelConfort {
+    BASICO
+    MEDIO
+    PREMIUM
+}
+
+enum TipoTransmision {
+    MANUAL
+    AUTOMATICA
+}
+
+Coche --|> Vehiculo
+Moto --|> Vehiculo
+Camion --|> Vehiculo
+Sedan --|> Coche
+SUV --|> Coche
+Deportivo --|> Coche
+Scooter --|> Moto
+Deportiva --|> Moto
+Vehiculo "1"-->"0..*" Persona
+Vehiculo ..|> Valorable
+Vehiculo --> Validar
+Persona --> Validar
+@enduml
